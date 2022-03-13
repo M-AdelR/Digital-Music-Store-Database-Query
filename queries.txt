@@ -1,0 +1,51 @@
+#Query 1
+SELECT A.Name AS "Artist Name", COUNT(T.TrackId) AS "Number of Tracks"
+FROM Artist A
+JOIN Album Al
+ON A.ArtistId = Al.ArtistId
+JOIN Track T
+ON Al.AlbumId = T.AlbumId
+GROUP BY 1
+ORDER BY 2 DESC
+LIMIT 5;
+
+-----------------------------------------------------------------------------------------------------------------------
+
+#Query 2
+SELECT A.Name AS "Artist Name", SUM(T.UnitPrice) AS "Tracks profit"
+FROM Artist A
+JOIN Album AL
+ON A.ArtistId = AL.ArtistId
+JOIN Track T
+ON AL.AlbumId = T.AlbumId
+GROUP BY 1
+ORDER BY 2 DESC
+LIMIT 5;
+
+-------------------------------------------------------------------------------------------------------------------------------
+
+#Query 3
+SELECT G.Name AS "Track Genres", C.Country AS "Country Name", COUNT(G.GenreID) AS "Genres Count"
+FROM Genre G
+JOIN Track T
+ON T.GenreId = G.GenreId
+JOIN InvoiceLine N
+ON T.TrackID = N.TrackId
+JOIN Invoice I
+ON N.InvoiceId = I.InvoiceId
+JOIN Customer C
+ON I.CustomerId = C.CustomerId
+WHERE C.Country = "USA"
+GROUP BY 1,2
+ORDER BY 3 DESC
+
+-------------------------------------------------------------------------------------------------------------------------------------
+
+#Query 4
+SELECT (C.FirstName || " "|| C.LastName) AS "Customer Name", C.Country, SUM(I.Total) AS "Total Bills"
+FROM Customer C
+JOIN Invoice I
+ON C.CustomerId = I.CustomerId
+GROUP BY 1,2
+ORDER BY 3 DESC
+LIMIT 10;
